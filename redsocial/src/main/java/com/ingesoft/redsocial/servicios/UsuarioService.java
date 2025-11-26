@@ -35,13 +35,6 @@ public class UsuarioService {
             throw new Exception("Ya existe otra cuenta con ese correo institucional");
         }
 
-        // 5. Sistema valida que el password tenga más de 8 caracteres, incluya un número y una mayúscula
-        if (password == null || password.length() < 8
-            || !Pattern.compile(".*\\d.*").matcher(password).matches()
-            || !Pattern.compile(".*[A-Z].*").matcher(password).matches()) {
-            throw new Exception("La contraseña debe tener mínimo 8 caracteres, incluir un número y una letra mayúscula");
-        }
-
         // 6. Sistema crea el nuevo usuario
         Usuario usuario = new Usuario();
         usuario.setCorreo(correo);
@@ -69,7 +62,7 @@ public class UsuarioService {
 
         // 5. Sistema valida que el password tenga más de 5 letras (comportamiento previo)
         if (password == null || password.length() <= 5) {
-            throw new Exception("La contraseña no cumple con la política de la red social");
+            throw new Exception("La contraseña debe tener más de 5 caracteres");
         }
 
         // 6. Sistema crea el nuevo usuario
