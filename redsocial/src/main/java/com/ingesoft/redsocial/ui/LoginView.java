@@ -26,7 +26,6 @@ public class LoginView extends Main {
 
     UsuarioService usuarioService;
 
-    @Autowired
     UsuarioRepository usuarioRepository;
 
     // == Componentes
@@ -42,12 +41,14 @@ public class LoginView extends Main {
     public LoginView(
         SessionService session,
         UsuarioService usuarioService,
-        TituloComponent tituloComponent
+        TituloComponent tituloComponent,
+        UsuarioRepository usuarioRepository
     ) {
 
         this.session = session;
         this.usuarioService = usuarioService;
         this.tituloComponent = tituloComponent;
+        this.usuarioRepository = usuarioRepository;
 
         setSizeFull();
         getStyle().set("flex-grow", "1");

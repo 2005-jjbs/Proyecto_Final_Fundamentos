@@ -1,3 +1,20 @@
+package com.ingesoft.redsocial.ui;
+
+import com.ingesoft.redsocial.ui.componentes.NavegacionComponent;
+import com.ingesoft.redsocial.ui.servicio.SessionService;
+import com.ingesoft.redsocial.repositorios.UsuarioRepository;
+import com.ingesoft.redsocial.repositorios.ProductoRepository;
+import com.ingesoft.redsocial.modelo.Usuario;
+
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
+
 @Route("")
 @UIScope
 public class HomeView extends VerticalLayout {
@@ -42,7 +59,7 @@ public class HomeView extends VerticalLayout {
         VerticalLayout centro = new VerticalLayout(bienvenida, verCatalogo, publicarProducto);
         centro.setWidth("600px");
         centro.getStyle().set("margin", "24px auto");
-        centro.setAlignItems(Alignment.CENTER);
+        centro.setAlignItems(FlexComponent.Alignment.CENTER);
 
         add(centro);
 
