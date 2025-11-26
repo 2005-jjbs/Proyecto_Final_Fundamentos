@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import com.ingesoft.redsocial.ui.servicio.SessionService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -24,26 +23,33 @@ public class NavegacionComponent extends VerticalLayout {
     // == Componentes
 
     Button irAHome;
-    Button irAAmigos;
     Button cerrarSesion;
+    Button irARegistro; // nuevo
+    Button irARegistrarProducto; // nuevo
+    Button irACatalogo; // nuevo
+
+    // Para reutilizar el componente de título
+    TituloComponent tituloComponent;
 
     // == Constructor
     // - Crea el componente
 
     public NavegacionComponent(
-        SessionService sessionService
+        SessionService sessionService,
+        TituloComponent tituloComponent
     ) {
 
         this.sessionService = sessionService;
+        this.tituloComponent = tituloComponent;
 
-        HorizontalLayout barraTitulo = new HorizontalLayout();
         setWidthFull();
+        // estilo ligero para diferenciar la barra de navegación
+        getStyle().set("background", "linear-gradient(90deg,#fffde7 0%, #e3f2fd 100%)");
+        getStyle().set("padding", "8px 12px");
 
-        HorizontalLayout titulo = new HorizontalLayout();
-        titulo.setWidthFull();
-        titulo.add(new H1("Red Social"));
-        barraTitulo.add(titulo);
-        
+        // usa el componente de título en lugar de repetir H1
+        add(tituloComponent);
+
         HorizontalLayout botones = new HorizontalLayout();
         botones.setWidthFull();
         botones.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
@@ -54,11 +60,18 @@ public class NavegacionComponent extends VerticalLayout {
         );
         botones.add(irAHome);
 
-        irAAmigos = new Button("Amigos");
-        irAAmigos.addClickListener(
-            e -> navegarA("amigos")   
-        );
-        botones.add(irAAmigos);
+        // nuevos botones de navegación
+        irACatalogo = new Button("Catálogo");
+        irACatalogo.addClickListener(e -> navegarA("catalogo"));
+        botones.add(irACatalogo);
+
+        irARegistrarProducto = new Button("Registrar Producto");
+        irARegistrarProducto.addClickListener(e -> navegarA("registrar-producto"));
+        botones.add(irARegistrarProducto);
+
+        irARegistro = new Button("Registrarse");
+        irARegistro.addClickListener(e -> navegarA("registro"));
+        botones.add(irARegistro);
 
         cerrarSesion = new Button("Cerrar Sesión");
         cerrarSesion.addClickListener(
@@ -66,9 +79,7 @@ public class NavegacionComponent extends VerticalLayout {
         );
         botones.add(cerrarSesion);
 
-        barraTitulo.add(botones);
-
-        add(barraTitulo);
+        add(botones);
         add(new Hr());
 
     } 

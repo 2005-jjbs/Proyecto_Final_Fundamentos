@@ -3,6 +3,8 @@ package com.ingesoft.redsocial.ui;
 import com.ingesoft.redsocial.servicios.UsuarioService;
 import com.ingesoft.redsocial.ui.componentes.TituloComponent;
 import com.ingesoft.redsocial.ui.servicio.SessionService;
+import com.ingesoft.redsocial.repositorios.UsuarioRepository;
+import com.ingesoft.redsocial.modelo.Usuario;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.login.LoginForm;
@@ -11,7 +13,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@Route(value = "login", autoLayout = false) 
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Route(value = "login", autoLayout = false)
 @PageTitle("Login")
 @AnonymousAllowed 
 public class LoginView extends Main {
@@ -21,6 +25,9 @@ public class LoginView extends Main {
     SessionService session;
 
     UsuarioService usuarioService;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     // == Componentes
     // - Elementos de la pantalla
@@ -44,12 +51,17 @@ public class LoginView extends Main {
 
         setSizeFull();
         getStyle().set("flex-grow", "1");
+        // fondo suave con amarillo y azul
+        getStyle().set("background", "linear-gradient(180deg,#fffde7 0%, #e3f2fd 100%)");
+        getStyle().set("padding", "12px");
 
         add(tituloComponent);
         
         // agrega la pantalla de login
         loginForm = new LoginForm();
         loginForm.setForgotPasswordButtonVisible(false);
+        // centrar formulario
+        loginForm.getStyle().set("margin", "40px auto");
         add(loginForm);
 
         // cuando se hace clic en iniciar sesión        
@@ -66,9 +78,24 @@ public class LoginView extends Main {
 
     public void validaInicioSesion(String username, String password) {
 
-        // Hace la autenticación usando los datos de la pantalla
+        // si el campo parece un correo, usamos el flujo por correo
+        if (username != null && username.contains("@")) {
+            try {
+                usuarioService.iniciarSesionPorCorreo(username, password);
+                // obtener login real del usuario
+                Usuario u = usuarioRepository.findByCorreo(username).orElseThrow(() -> new Exception("Usuario no encontrado"));
+                session.setLoginEnSesion(u.getLogin());
+                Notification.show("Inicia sesión para " + u.getLogin());
+                UI.getCurrent().navigate("");
+                return;
+            } catch (Exception e) {
+                loginForm.setError(true);
+                Notification.show("Error iniciando sesión por correo: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
+                return;
+            }
+        }
 
-        // si la autenticación sale bien
+        // flujo por login
         if (authenticate(username, password)) {
 
             // muestra un mensaje de inicio de sesión

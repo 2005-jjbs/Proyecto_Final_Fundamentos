@@ -22,12 +22,23 @@ public class TituloComponent extends VerticalLayout {
 
     public TituloComponent() {
 
+        // Estilos de fondo con amarillo y azul
+        getStyle().set("background", "linear-gradient(90deg,#FFD54F 0%, #1976D2 100%)");
+        getStyle().set("padding", "8px 16px");
+
         HorizontalLayout barraTitulo = new HorizontalLayout();
-        setWidthFull();
+        barraTitulo.setWidthFull();
 
         HorizontalLayout titulo = new HorizontalLayout();
         titulo.setWidthFull();
-        titulo.add(new H1("Red Social"));
+        titulo.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+
+        H1 h = new H1("JMark - Marketplace Universidad Javeriana");
+        h.getStyle().set("color", "#ffffff");
+        h.getStyle().set("margin", "0");
+        h.getStyle().set("font-size", "20px");
+
+        titulo.add(h);
         barraTitulo.add(titulo);
         
         add(barraTitulo);
