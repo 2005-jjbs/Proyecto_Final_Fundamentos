@@ -1,3 +1,14 @@
+package com.ingesoft.redsocial.servicios;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ingesoft.redsocial.modelo.Producto;
+import com.ingesoft.redsocial.repositorios.ProductoRepository;
+
 @Service
 public class ProductoService {
 

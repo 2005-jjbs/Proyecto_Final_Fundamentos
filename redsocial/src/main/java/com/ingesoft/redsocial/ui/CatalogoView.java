@@ -1,3 +1,18 @@
+package com.ingesoft.redsocial.ui;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ingesoft.redsocial.modelo.Producto;
+import com.ingesoft.redsocial.servicios.ProductoService;
+import com.ingesoft.redsocial.ui.componentes.NavegacionComponent;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Main;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+
 @Route("catalogo")
 @PageTitle("Catálogo de Productos")
 public class CatalogoView extends Main {
@@ -30,13 +45,15 @@ public class CatalogoView extends Main {
         grid.addColumn(Producto::getEstado).setHeader("Estado");
 
         layout.add(grid);
+
         add(layout);
 
         actualizarGrid();
     }
 
     private void actualizarGrid() {
-        grid.setItems(productoService.listarTodos());
+        List<Producto> productos = productoService.listarTodos();
+        grid.setItems(productos);
     }
 
 }
