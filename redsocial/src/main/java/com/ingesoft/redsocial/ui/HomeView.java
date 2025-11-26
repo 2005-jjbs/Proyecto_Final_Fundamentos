@@ -1,21 +1,3 @@
-package com.ingesoft.redsocial.ui;
-
-import com.ingesoft.redsocial.ui.componentes.NavegacionComponent;
-import com.ingesoft.redsocial.ui.servicio.SessionService;
-import com.ingesoft.redsocial.repositorios.UsuarioRepository;
-import com.ingesoft.redsocial.repositorios.ProductoRepository;
-import com.ingesoft.redsocial.modelo.Usuario;
-
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.page.AttachEvent;
-
-import org.springframework.web.context.annotation.UIScope;
-
 @Route("")
 @UIScope
 public class HomeView extends VerticalLayout {
@@ -23,7 +5,6 @@ public class HomeView extends VerticalLayout {
     private final SessionService sessionService;
     private final UsuarioRepository usuarioRepository;
     private final ProductoRepository productoRepository;
-
     private final NavegacionComponent navegacion;
 
     private H2 bienvenida;
@@ -47,7 +28,8 @@ public class HomeView extends VerticalLayout {
         getStyle().set("background", "linear-gradient(180deg,#fffde7 0%, #e3f2fd 100%)");
         getStyle().set("padding", "12px");
 
-        UI.getCurrent().access(() -> alInicio_RevisarSesion());
+        // revisión de sesión
+        alInicio_RevisarSesion();
 
         add(navegacion);
 
@@ -63,10 +45,8 @@ public class HomeView extends VerticalLayout {
         centro.setAlignItems(Alignment.CENTER);
 
         add(centro);
-    }
 
-    @Override
-    protected void onAttach(AttachEvent event) {
+        // ahora sí es seguro
         actualizarBienvenida();
     }
 
@@ -85,7 +65,8 @@ public class HomeView extends VerticalLayout {
         Usuario u = usuarioRepository.findById(login).orElse(null);
         if (u != null) {
             long totalProductos = productoRepository.count();
-            bienvenida.setText("Bienvenido, " + u.getNombre() + " — Productos disponibles: " + totalProductos);
+            bienvenida.setText("Bienvenido, " + u.getNombre() +
+                    " — Productos disponibles: " + totalProductos);
         } else {
             bienvenida.setText("Bienvenido, " + login);
         }
