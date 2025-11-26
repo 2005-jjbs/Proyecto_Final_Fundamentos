@@ -44,6 +44,10 @@ public class UsuarioService {
         usuario.setFechaRegistro(java.time.LocalDateTime.now());
         usuario.setVerificado(false);
 
+        // Asignar un login único: usamos el correo completo como login para
+        // asegurar que la entidad tenga su identificador antes de persistir.
+        usuario.setLogin(correo);
+
         usuarios.save(usuario);
 
     }

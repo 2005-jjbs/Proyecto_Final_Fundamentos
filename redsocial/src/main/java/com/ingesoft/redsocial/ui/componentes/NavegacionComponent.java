@@ -96,7 +96,7 @@ public class NavegacionComponent extends VerticalLayout {
 		// coloca en null el usuario en la sesión
 		sessionService.setLoginEnSesion(null);
 		// navega hacia la página de login
-		UI.getCurrent().navigate("login");
+		UI.getCurrent().navigate("");
 	}
 
     // == Otros Métodos    

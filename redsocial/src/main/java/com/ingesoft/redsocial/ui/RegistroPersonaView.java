@@ -2,6 +2,7 @@ package com.ingesoft.redsocial.ui;
 
 import com.ingesoft.redsocial.servicios.UsuarioService;
 import com.ingesoft.redsocial.ui.componentes.TituloComponent;
+import com.ingesoft.redsocial.ui.servicio.SessionService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Main;
@@ -23,6 +24,7 @@ public class RegistroPersonaView extends Main {
 
     private final UsuarioService usuarioService;
     private final TituloComponent titulo;
+    private final SessionService sessionService;
 
     TextField correo;
     TextField nombre;
@@ -33,9 +35,10 @@ public class RegistroPersonaView extends Main {
     Button btnCancelar;
 
     @Autowired
-    public RegistroPersonaView(UsuarioService usuarioService, TituloComponent titulo) {
+    public RegistroPersonaView(UsuarioService usuarioService, TituloComponent titulo, SessionService sessionService) {
         this.usuarioService = usuarioService;
         this.titulo = titulo;
+        this.sessionService = sessionService;
 
         setSizeFull();
         getStyle().set("flex-grow", "1");
@@ -89,8 +92,10 @@ public class RegistroPersonaView extends Main {
                 password.getValue()
             );
 
-            Notification.show("Registro exitoso. Revise su correo institucional.", 3000, Notification.Position.MIDDLE);
-            UI.getCurrent().navigate("login");
+            // Asignar usuario a sesión y navegar a home
+            sessionService.setLoginEnSesion(correo.getValue());
+            Notification.show("Registro exitoso. Bienvenido: " + nombre.getValue(), 3000, Notification.Position.MIDDLE);
+            UI.getCurrent().navigate("home");
 
         } catch (Exception ex) {
             Notification.show("Error registrando usuario: " + ex.getMessage(), 4000, Notification.Position.MIDDLE);
@@ -98,4 +103,3 @@ public class RegistroPersonaView extends Main {
     }
 
 }
-
