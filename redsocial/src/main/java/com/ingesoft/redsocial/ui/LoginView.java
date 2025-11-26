@@ -6,6 +6,7 @@ import com.ingesoft.redsocial.ui.servicio.SessionService;
 import com.ingesoft.redsocial.repositorios.UsuarioRepository;
 import com.ingesoft.redsocial.modelo.Usuario;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
@@ -65,7 +66,13 @@ public class LoginView extends Main {
         loginForm.getStyle().set("margin", "40px auto");
         add(loginForm);
 
-        // cuando se hace clic en iniciar sesión        
+        // boton para ir a registro
+        Button btnRegistro = new Button("¿No tienes cuenta? Regístrate", e -> UI.getCurrent().navigate("registro-persona"));
+        btnRegistro.getStyle().set("display", "block");
+        btnRegistro.getStyle().set("margin", "8px auto");
+        add(btnRegistro);
+
+        // cuando se hace clic en iniciar sesión
         loginForm.addLoginListener(event -> 
             validaInicioSesion(event.getUsername(), event.getPassword())
         );

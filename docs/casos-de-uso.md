@@ -15,10 +15,9 @@ rectangle "JMark - Marketplace Universitario" {
     Visitante --> (Registrar nuevo usuario)
     Visitante --> (Iniciar sesión)
     
-    Usuario --> (Visualizar catálogo de productos)
-    Usuario --> (Buscar productos)
-    Usuario --> (Ver detalles de producto)
-
+    Usuario --> (Visualizar catálogo de productos con su detalle)
+    Usuario --> (Registrar nuevo producto)
+    Usuario --> (Cerrar sesión)
 }
 @enduml
 ```
