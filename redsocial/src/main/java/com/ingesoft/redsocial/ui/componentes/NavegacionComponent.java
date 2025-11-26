@@ -70,7 +70,8 @@ public class NavegacionComponent extends VerticalLayout {
         botones.add(irARegistrarProducto);
 
         irARegistro = new Button("Registrarse");
-        irARegistro.addClickListener(e -> navegarA("registro"));
+        // corregir ruta de registro a 'registro-persona'
+        irARegistro.addClickListener(e -> navegarA("registro-persona"));
         botones.add(irARegistro);
 
         cerrarSesion = new Button("Cerrar Sesión");
