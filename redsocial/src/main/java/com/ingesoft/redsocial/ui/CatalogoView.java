@@ -43,6 +43,8 @@ public class CatalogoView extends Main {
         grid.addColumn(Producto::getCategoria).setHeader("Categoría");
         grid.addColumn(Producto::getUbicacion).setHeader("Ubicación");
         grid.addColumn(Producto::getEstado).setHeader("Estado");
+        // columna para mostrar propietario (login)
+        grid.addColumn(p -> p.getPropietario() == null ? "" : p.getPropietario().getLogin()).setHeader("Propietario");
 
         layout.add(grid);
 

@@ -15,7 +15,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
-@Route("")
+@Route("home")
 @UIScope
 public class HomeView extends VerticalLayout {
 

@@ -56,7 +56,7 @@ public class NavegacionComponent extends VerticalLayout {
 
         irAHome = new Button("Home");
         irAHome.addClickListener(
-            e -> navegarA("")
+            e -> navegarA("home")
         );
         botones.add(irAHome);
 
@@ -72,6 +72,8 @@ public class NavegacionComponent extends VerticalLayout {
         irARegistro = new Button("Registrarse");
         // corregir ruta de registro a 'registro-persona'
         irARegistro.addClickListener(e -> navegarA("registro-persona"));
+        // solamente mostrar si no hay usuario en sesión
+        irARegistro.setVisible(this.sessionService == null || this.sessionService.getLoginEnSesion() == null);
         botones.add(irARegistro);
 
         cerrarSesion = new Button("Cerrar Sesión");

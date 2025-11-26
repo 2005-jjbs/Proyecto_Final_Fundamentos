@@ -16,7 +16,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "login", autoLayout = false)
+@Route(value = "", autoLayout = false)
 @PageTitle("Login")
 @AnonymousAllowed 
 public class LoginView extends Main {
@@ -70,10 +70,12 @@ public class LoginView extends Main {
         Button btnRegistro = new Button("¿No tienes cuenta? Regístrate", e -> UI.getCurrent().navigate("registro-persona"));
         btnRegistro.getStyle().set("display", "block");
         btnRegistro.getStyle().set("margin", "8px auto");
+        // mostrar solamente si no hay nadie en sesión
+        btnRegistro.setVisible(session.getLoginEnSesion() == null);
         add(btnRegistro);
 
         // cuando se hace clic en iniciar sesión
-        loginForm.addLoginListener(event -> 
+        loginForm.addLoginListener(event ->
             validaInicioSesion(event.getUsername(), event.getPassword())
         );
         
@@ -94,7 +96,7 @@ public class LoginView extends Main {
                 Usuario u = usuarioRepository.findByCorreo(username).orElseThrow(() -> new Exception("Usuario no encontrado"));
                 session.setLoginEnSesion(u.getLogin());
                 Notification.show("Inicia sesión para " + u.getLogin());
-                UI.getCurrent().navigate("");
+                UI.getCurrent().navigate("home");
                 return;
             } catch (Exception e) {
                 loginForm.setError(true);
@@ -111,7 +113,7 @@ public class LoginView extends Main {
             // asigna el usuario a la sesión
             session.setLoginEnSesion(username);
             // navega hacia la página principal
-            UI.getCurrent().navigate("");
+            UI.getCurrent().navigate("home");
 
         // si la atenticación fall
         } else {
