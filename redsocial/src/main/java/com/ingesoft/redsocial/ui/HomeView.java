@@ -5,59 +5,50 @@ import com.ingesoft.redsocial.ui.servicio.SessionService;
 import com.ingesoft.redsocial.repositorios.UsuarioRepository;
 import com.ingesoft.redsocial.repositorios.ProductoRepository;
 import com.ingesoft.redsocial.modelo.Usuario;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.page.AttachEvent;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.annotation.UIScope;
 
 @Route("")
+@UIScope
 public class HomeView extends VerticalLayout {
 
-    // == Servicios de la aplicación
+    private final SessionService sessionService;
+    private final UsuarioRepository usuarioRepository;
+    private final ProductoRepository productoRepository;
 
-    SessionService sessionService;
+    private final NavegacionComponent navegacion;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
-
-    @Autowired
-    ProductoRepository productoRepository;
-
-    // == Componentes
-    // - Elementos de la pantalla
-
-    NavegacionComponent navegacion;
-
-    H2 bienvenida;
-    Button verCatalogo;
-    Button publicarProducto;
-
-    // == Constructor
-    // - Crea la pantalla
+    private H2 bienvenida;
+    private Button verCatalogo;
+    private Button publicarProducto;
 
     public HomeView(
-        SessionService sessionService,
-        NavegacionComponent navegacion
+            SessionService sessionService,
+            NavegacionComponent navegacion,
+            UsuarioRepository usuarioRepository,
+            ProductoRepository productoRepository
     ) {
 
         this.sessionService = sessionService;
         this.navegacion = navegacion;
+        this.usuarioRepository = usuarioRepository;
+        this.productoRepository = productoRepository;
 
         setSizeFull();
         getStyle().set("flex-grow", "1");
         getStyle().set("background", "linear-gradient(180deg,#fffde7 0%, #e3f2fd 100%)");
         getStyle().set("padding", "12px");
 
-        // al momento de cargar la pantalla
-        UI.getCurrent().access(() -> {
-            alInicio_RevisarSesion();
-        });
+        UI.getCurrent().access(() -> alInicio_RevisarSesion());
 
-        // == pantalla a mostrar
         add(navegacion);
 
         bienvenida = new H2("");
@@ -66,27 +57,21 @@ public class HomeView extends VerticalLayout {
         verCatalogo = new Button("Ver Catálogo", e -> UI.getCurrent().navigate("catalogo"));
         publicarProducto = new Button("Publicar Producto", e -> UI.getCurrent().navigate("registrar-producto"));
 
-        // contenedor central
         VerticalLayout centro = new VerticalLayout(bienvenida, verCatalogo, publicarProducto);
         centro.setWidth("600px");
         centro.getStyle().set("margin", "24px auto");
-        centro.setAlignItems(com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER);
+        centro.setAlignItems(Alignment.CENTER);
 
         add(centro);
-
-        actualizarBienvenida();
-
     }
 
-    // == Controladores
-    // - obtiene los datos de la solicitud de la pantalla
-    // - invoca a los servicios / la lógica de negocio
-    // - actualiza la pantalla
+    @Override
+    protected void onAttach(AttachEvent event) {
+        actualizarBienvenida();
+    }
 
     public void alInicio_RevisarSesion() {
-        // si no hay nadie en la sesión
         if (sessionService.getLoginEnSesion() == null) {
-            // debe ir a la página de login
             UI.getCurrent().navigate("login");
         }
     }
@@ -107,17 +92,8 @@ public class HomeView extends VerticalLayout {
     }
 
     public void alSalir_CerrarSesion() {
-        // muestra un mensaje
         Notification.show("Cerrando la sesión del usuario");
-
-        // coloca en null el usuario en la sesión
         sessionService.setLoginEnSesion(null);
-        // navega hacia la página de login
         UI.getCurrent().navigate("login");
     }
-
-
-    // == Otros Métodos
-    // - para invocar la lógica de negocio más fácil
-
 }
