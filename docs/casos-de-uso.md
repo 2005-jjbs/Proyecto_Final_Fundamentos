@@ -18,6 +18,7 @@ rectangle "JMark - Marketplace Universitario" {
     Usuario --> (Visualizar catálogo de productos con su detalle)
     Usuario --> (Registrar nuevo producto)
     Usuario --> (Seleccionar o crear categoría en formulario de producto)
+    Usuario --> (Generar transacción)
     Usuario --> (Cerrar sesión)
 }
 @enduml
@@ -32,3 +33,4 @@ rectangle "JMark - Marketplace Universitario" {
 | CU03 | [Registrar nuevos productos](casos-de-uso/CU03-Registrar-Producto.md)        |
 | CU04 | [Visualizar catalogo de productos](casos-de-uso/CU04-Visualizar-catalogo.md) |
 | CU05 | [Seleccionar o crear categoría en formulario de producto](casos-de-uso/CU05-Crear-Categorias-Producto.md) |
+| CU06 | [Generar transacción (compra de producto)](casos-de-uso/CU06-Generar-Transaccion.md) |

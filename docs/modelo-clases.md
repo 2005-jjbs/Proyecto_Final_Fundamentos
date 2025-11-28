@@ -19,11 +19,28 @@ class Producto {
   - titulo: String
   - descripcion: String
   - precio: Double
-  - categoria: String
-  - estado: String
-  - ubicacion: String
+  - categoria: Categoria
+  - estado: Estado
+  - ubicacion: Ubicacion
   - fechaPublicacion: LocalDateTime
   - activo: Boolean
+}
+
+class Categoria {
+  - id: Long
+  - nombre: String
+  - descripcion: String
+  - activo: Boolean
+}
+
+class Ubicacion {
+  - id: Long
+  - universidad: String
+}
+
+class Estado {
+  - id: Long
+  - nuevo/usado: String
 }
 
 class Transaccion {
@@ -31,33 +48,22 @@ class Transaccion {
   - fechaTransaccion: LocalDateTime
   - estado: String
   - montoTotal: Double
-  - metodoPago: String
+  - metodoPago: MetodoPago
 }
 
-class Calificacion {
+class MetodoPago {
   - id: Long
-  - puntuacion: Integer
-  - comentario: String
-  - fechaCalificacion: LocalDateTime
-}
-
-class Mensaje {
-  - id: Long
-  - contenido: String
-  - fechaEnvio: LocalDateTime
-  - leido: Boolean
+  - nombre: String
+  - numeroCuenta: Long
 }
 
 ' Relaciones principales
 Usuario "1" -- "*" Producto : publica
 Usuario "1" -- "*" Transaccion : compra
-Producto "1" -- "*" Transaccion : incluido_en
-Usuario "*" -- "*" Usuario : contacta >
-Usuario "1" -- "*" Calificacion : emite
-Usuario "1" -- "*" Calificacion : recibe
-Transaccion "1" -- "1" Calificacion : tiene
-Usuario "1" -- "*" Mensaje : envía
-Usuario "1" -- "*" Mensaje : recibe
+Producto "*" -- "1" Categoria : pertenece_a
+Producto "*" -- "1" Ubicacion : ubicado_en
+Producto "*" -- "1" Estado : tiene_estado
+Transaccion "*" -- "1" MetodoPago : usa
 
 @enduml
 ```
