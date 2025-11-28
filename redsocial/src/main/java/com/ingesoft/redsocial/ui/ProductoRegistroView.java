@@ -17,6 +17,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.spring.annotation.UIScope;
+import jakarta.annotation.PostConstruct;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -34,6 +36,7 @@ import com.vaadin.flow.component.html.Span;
 
 @Route(value = "registrar-producto")
 @PageTitle("Registrar Producto")
+@UIScope
 public class ProductoRegistroView extends Main {
 
     @Autowired
@@ -90,8 +93,6 @@ public class ProductoRegistroView extends Main {
         ubicacion = new ComboBox<>("Ubicación");
         estado = new ComboBox<>("Estado (nuevo/usado)");
 
-        cargarDatosIniciales();
-
         // cuando seleccionan "Otra" en categorías, mostrar campo para nueva categoría
         categoria.addValueChangeListener(e -> {
             Categoria sel = e.getValue();
@@ -109,6 +110,12 @@ public class ProductoRegistroView extends Main {
         layout.add(titulo, descripcion, precio, categoria, nuevaCategoria, ubicacion, estado, btnCrear);
 
         add(layout);
+    }
+
+    @PostConstruct
+    private void initAfterInjection() {
+        // cargar datos del formulario ahora que los repositorios están inyectados
+        cargarDatosIniciales();
     }
 
     private void cargarDatosIniciales() {

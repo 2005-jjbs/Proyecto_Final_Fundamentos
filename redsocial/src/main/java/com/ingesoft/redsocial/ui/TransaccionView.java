@@ -1,6 +1,5 @@
 package com.ingesoft.redsocial.ui;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +57,7 @@ public class TransaccionView extends VerticalLayout {
         productos.setItemLabelGenerator(p -> p.getTitulo() + " - $" + p.getPrecio());
 
         metodos.setWidth("400px");
-        metodos.setItemLabelGenerator(m -> m.getNombre());
+        metodos.setItemLabelGenerator(MetodoPago::getNombre);
 
         monto.setReadOnly(true);
         monto.setWidth("400px");

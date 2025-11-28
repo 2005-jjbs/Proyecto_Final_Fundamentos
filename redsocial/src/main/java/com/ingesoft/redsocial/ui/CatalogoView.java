@@ -18,7 +18,6 @@ import com.vaadin.flow.router.Route;
 public class CatalogoView extends Main {
 
     private final ProductoService productoService;
-    private final NavegacionComponent navegacion;
 
     private final Grid<Producto> grid;
 
@@ -27,7 +26,6 @@ public class CatalogoView extends Main {
                         NavegacionComponent navegacion) {
 
         this.productoService = productoService;
-        this.navegacion = navegacion;
 
         setSizeFull();
         getStyle().set("flex-grow", "1");
@@ -40,11 +38,19 @@ public class CatalogoView extends Main {
         grid.addColumn(Producto::getTitulo).setHeader("Título");
         grid.addColumn(Producto::getDescripcion).setHeader("Descripción");
         grid.addColumn(p -> p.getPrecio() == null ? "" : p.getPrecio().toString()).setHeader("Precio");
-        grid.addColumn(Producto::getCategoria).setHeader("Categoría");
-        grid.addColumn(Producto::getUbicacion).setHeader("Ubicación");
-        grid.addColumn(Producto::getEstado).setHeader("Estado");
+        grid.addColumn(p -> p.getCategoria() == null ? "" : p.getCategoria().getNombre()).setHeader("Categoría");
+        grid.addColumn(p -> p.getUbicacion() == null ? "" : p.getUbicacion().getUniversidad()).setHeader("Ubicación");
+        grid.addColumn(p -> p.getEstado() == null ? "" : p.getEstado().getNombre()).setHeader("Estado");
         // columna para mostrar propietario (login)
         grid.addColumn(p -> p.getPropietario() == null ? "" : p.getPropietario().getLogin()).setHeader("Propietario");
+
+        // permitir hacer click en fila para ver detalle
+        grid.addItemClickListener(event -> {
+            Producto p = event.getItem();
+            if (p != null && p.getId() != null) {
+                getUI().ifPresent(ui -> ui.navigate("producto?id=" + p.getId()));
+            }
+        });
 
         layout.add(grid);
 
@@ -54,8 +60,12 @@ public class CatalogoView extends Main {
     }
 
     private void actualizarGrid() {
+        // Mostrar solo productos activos
         List<Producto> productos = productoService.listarTodos();
-        grid.setItems(productos);
+        java.util.List<Producto> activos = productos.stream()
+                .filter(p -> p.getActivo() != null && p.getActivo())
+                .toList();
+        grid.setItems(activos);
     }
 
 }

@@ -100,7 +100,7 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         estadoRepository.save(estadoNuevo);
 
         Ubicacion ubBogota = new Ubicacion();
-        ubBogota.setUniversidad("Pontificia Universidad Javeriana - Bogotá");
+        ubBogota.setUniversidad("Bogotá - Pontificia Universidad Javeriana");
         ubicacionRepository.save(ubBogota);
 
         MetodoPago mpTarjeta = new MetodoPago();
@@ -115,7 +115,7 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
 
         // Productos de ejemplo vinculando entidades
         Producto p1 = new Producto();
-        p1.setTitulo("Libreta Moleskine");
+        p1.setTitulo("Libreta JeanBook");
         p1.setDescripcion("Libreta negra tamaño A5 en buen estado.");
         p1.setPrecio(25000.0);
         p1.setCategoria(catPapeleria);
@@ -137,6 +137,55 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         p2.setActivo(true);
         p2.setPropietario(u2);
         productoRepository.save(p2);
+
+        // Productos adicionales de ejemplo
+        Producto p3 = new Producto();
+        p3.setTitulo("Camisa universitaria");
+        p3.setDescripcion("Camisa oficial en buen estado, talla M.");
+        p3.setPrecio(30000.0);
+        p3.setCategoria(catPapeleria); // reutilizamos categoría disponible
+        p3.setEstado(estadoUsado);
+        p3.setUbicacion(ubBogota);
+        p3.setFechaPublicacion(java.time.LocalDateTime.now());
+        p3.setActivo(true);
+        p3.setPropietario(u3);
+        productoRepository.save(p3);
+
+        Producto p4 = new Producto();
+        p4.setTitulo("AirpodsPro 2");
+        p4.setDescripcion("Audífonos con micrófono, poco uso.");
+        p4.setPrecio(45000.0);
+        p4.setCategoria(catElectronicos);
+        p4.setEstado(estadoUsado);
+        p4.setUbicacion(ubBogota);
+        p4.setFechaPublicacion(java.time.LocalDateTime.now());
+        p4.setActivo(true);
+        p4.setPropietario(u1);
+        productoRepository.save(p4);
+
+        Producto p5 = new Producto();
+        p5.setTitulo("Hoodie Javeriano");
+        p5.setDescripcion("Hoodie Javeriano.");
+        p5.setPrecio(15000.0);
+        p5.setCategoria(catPapeleria);
+        p5.setEstado(estadoUsado);
+        p5.setUbicacion(ubBogota);
+        p5.setFechaPublicacion(java.time.LocalDateTime.now());
+        p5.setActivo(true);
+        p5.setPropietario(u2);
+        productoRepository.save(p5);
+
+        Producto p6 = new Producto();
+        p6.setTitulo("Maleta resistente");
+        p6.setDescripcion("Maleta para laptop, color negro, poco uso.");
+        p6.setPrecio(90000.0);
+        p6.setCategoria(catElectronicos);
+        p6.setEstado(estadoNuevo);
+        p6.setUbicacion(ubBogota);
+        p6.setFechaPublicacion(java.time.LocalDateTime.now());
+        p6.setActivo(true);
+        p6.setPropietario(u1);
+        productoRepository.save(p6);
 
     }
 
