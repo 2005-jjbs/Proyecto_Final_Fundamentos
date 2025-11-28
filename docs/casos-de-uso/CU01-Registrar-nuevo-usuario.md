@@ -18,9 +18,9 @@
 
 **Excepción:** Ya exista otro usuario con ese correo institucional
 
-2.1. Sistema muestra mensaje "Ya existe una cuenta con este correo institucional"
-2.2. Sistema sugiere recuperación de contraseña
-2.3. Termina
+- 2.1. Sistema muestra mensaje "Ya existe una cuenta con este correo institucional"
+- 2.2. Sistema sugiere recuperación de contraseña
+- 2.3. Termina
 
 **Excepción:** El password no cumple con las reglas de seguridad
 

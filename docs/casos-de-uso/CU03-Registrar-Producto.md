@@ -4,17 +4,17 @@ Actor: Usuario vendedor
 
 ## Guion (Curso normal de eventos)
 
-1. El usuario inicia el proceso de creación de una nueva publicación en el Marketplace.
-2. El sistema presenta la interfaz o formulario para registrar la publicación.
-3. El usuario completa el nombre del producto.
+1. El usuario selecciona la opción **“Crear producto”** en el Marketplace.
+2. El sistema muestra el formulario para crear una nueva publicación.
+3. El usuario ingresa el nombre del producto.
 4. El usuario selecciona la categoría del producto.
 5. El usuario ingresa el precio.
 6. El usuario ingresa la descripción del producto.
-7. El usuario adjunta una o más imágenes u otros archivos multimedia.
-8. El sistema valida que los datos y archivos cumplan las reglas (campos obligatorios, formatos y tamaños).
-9. Si la validación es exitosa, el sistema registra la nueva publicación.
-10. El sistema notifica al usuario que la publicación fue creada con éxito.
-11. La publicación queda disponible en el catálogo.
+7. El usuario adjunta una o más imágenes del producto.
+8. El sistema valida que todos los datos requeridos estén completos y tengan un formato válido.
+9. Si todo es correcto, el sistema registra la nueva publicación.
+10. El sistema muestra un mensaje indicando que la publicación fue creada con éxito.
+11. El producto aparece disponible en el catálogo general.
 
 ---
 
