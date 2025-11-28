@@ -85,14 +85,21 @@ public class TransaccionView extends VerticalLayout {
 
         metodos.addValueChangeListener(ev -> actualizarEstadoBoton());
 
+        // añadir componentes al layout; la carga de datos y la info de sesión
+        // se realizan en el método @PostConstruct para asegurar que las dependencias
+        // estén inyectadas antes de usarlas.
+        add(productos, metodos, monto, compradorInfo, pagar);
+    }
+
+    @jakarta.annotation.PostConstruct
+    private void initAfterInjection() {
         // Mostrar info de comprador si hay sesión
         String login = sessionService.getLoginEnSesion();
         if (login != null) {
             usuarioRepo.findById(login).ifPresent(u -> compradorInfo.setText("Usuario: " + u.getNombre() + " (" + u.getCorreo() + ")"));
         }
 
-        add(productos, metodos, monto, compradorInfo, pagar);
-
+        // Cargar datos del formulario ahora que los repositorios están inyectados
         cargarDatosIniciales();
     }
 

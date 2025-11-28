@@ -18,6 +18,20 @@ import com.vaadin.flow.router.Route;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.ingesoft.redsocial.modelo.Categoria;
+import com.ingesoft.redsocial.modelo.Ubicacion;
+import com.ingesoft.redsocial.modelo.Estado;
+import com.ingesoft.redsocial.repositorios.CategoriaRepository;
+import com.ingesoft.redsocial.repositorios.UbicacionRepository;
+import com.ingesoft.redsocial.repositorios.EstadoRepository;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.html.Span;
+
 @Route(value = "registrar-producto")
 @PageTitle("Registrar Producto")
 public class ProductoRegistroView extends Main {
@@ -31,14 +45,24 @@ public class ProductoRegistroView extends Main {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
+    @Autowired
+    UbicacionRepository ubicacionRepository;
+
+    @Autowired
+    EstadoRepository estadoRepository;
+
     NavegacionComponent navegacion;
 
     TextField titulo;
     TextArea descripcion;
     NumberField precio;
-    TextField categoria;
-    TextField ubicacion;
-    TextField estado;
+    ComboBox<Categoria> categoria;
+    TextField nuevaCategoria;
+    ComboBox<Ubicacion> ubicacion;
+    ComboBox<Estado> estado;
     Button btnCrear;
 
     public ProductoRegistroView(NavegacionComponent navegacion) {
@@ -60,16 +84,51 @@ public class ProductoRegistroView extends Main {
         descripcion = new TextArea("Descripción");
         precio = new NumberField("Precio");
         precio.setStep(0.01);
-        categoria = new TextField("Categoría");
-        ubicacion = new TextField("Ubicación");
-        estado = new TextField("Estado (nuevo/usado)");
+        categoria = new ComboBox<>("Categoría");
+        nuevaCategoria = new TextField("Otra categoría (especifique)");
+        nuevaCategoria.setVisible(false);
+        ubicacion = new ComboBox<>("Ubicación");
+        estado = new ComboBox<>("Estado (nuevo/usado)");
+
+        cargarDatosIniciales();
+
+        // cuando seleccionan "Otra" en categorías, mostrar campo para nueva categoría
+        categoria.addValueChangeListener(e -> {
+            Categoria sel = e.getValue();
+            if (sel != null && "__OTRA__".equals(sel.getNombre())) {
+                nuevaCategoria.setVisible(true);
+            } else {
+                nuevaCategoria.setVisible(false);
+                nuevaCategoria.clear();
+            }
+        });
 
         btnCrear = new Button("Crear");
         btnCrear.addClickListener(e -> crearProducto());
 
-        layout.add(titulo, descripcion, precio, categoria, ubicacion, estado, btnCrear);
+        layout.add(titulo, descripcion, precio, categoria, nuevaCategoria, ubicacion, estado, btnCrear);
 
         add(layout);
+    }
+
+    private void cargarDatosIniciales() {
+        // cargar categorías y añadir opción 'Otra'
+        java.util.List<Categoria> cats = categoriaRepository.findAll();
+        Categoria otra = new Categoria();
+        otra.setNombre("__OTRA__");
+        java.util.List<Categoria> catsWithOtra = new java.util.ArrayList<>(cats);
+        catsWithOtra.add(otra);
+        categoria.setItems(catsWithOtra);
+        categoria.setItemLabelGenerator(c -> c.getNombre().equals("__OTRA__") ? "Otra..." : c.getNombre());
+
+        // cargar ubicaciones y estados
+        java.util.List<Ubicacion> ubs = ubicacionRepository.findAll();
+        ubicacion.setItems(ubs);
+        ubicacion.setItemLabelGenerator(u -> u.getUniversidad());
+
+        java.util.List<Estado> ests = estadoRepository.findAll();
+        estado.setItems(ests);
+        estado.setItemLabelGenerator(s -> s.getNombre());
     }
 
     private void crearProducto() {
@@ -90,9 +149,40 @@ public class ProductoRegistroView extends Main {
             p.setTitulo(titulo.getValue());
             p.setDescripcion(descripcion.getValue());
             p.setPrecio(precio.getValue() == null ? 0.0 : precio.getValue());
-            p.setCategoria(categoria.getValue());
-            p.setUbicacion(ubicacion.getValue());
-            p.setEstado(estado.getValue());
+            // manejar categoría (posible creación nueva)
+            Categoria selCat = categoria.getValue();
+            if (selCat == null) {
+                Notification.show("Seleccione o cree una categoría", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+            if ("__OTRA__".equals(selCat.getNombre())) {
+                String nombreNueva = nuevaCategoria.getValue();
+                if (nombreNueva == null || nombreNueva.isBlank()) {
+                    Notification.show("Indique el nombre de la nueva categoría", 3000, Notification.Position.MIDDLE);
+                    return;
+                }
+                Categoria nueva = new Categoria();
+                nueva.setNombre(nombreNueva);
+                categoriaRepository.save(nueva);
+                p.setCategoria(nueva);
+            } else {
+                p.setCategoria(selCat);
+            }
+
+            // ubicacion y estado deben seleccionarse
+            Ubicacion selUb = ubicacion.getValue();
+            if (selUb == null) {
+                Notification.show("Seleccione la ubicación", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+            p.setUbicacion(selUb);
+
+            Estado selEst = estado.getValue();
+            if (selEst == null) {
+                Notification.show("Seleccione el estado del producto", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+            p.setEstado(selEst);
             p.setFechaPublicacion(java.time.LocalDateTime.now());
             p.setActivo(true);
 
