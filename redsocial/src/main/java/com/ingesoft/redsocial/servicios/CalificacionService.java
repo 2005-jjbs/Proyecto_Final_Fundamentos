@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ingesoft.redsocial.modelo.Calificacion;
 import com.ingesoft.redsocial.repositorios.CalificacionRepository;
 
 @Service

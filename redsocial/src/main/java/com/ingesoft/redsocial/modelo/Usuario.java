@@ -37,12 +37,6 @@ public class Usuario {
     @OneToMany(mappedBy = "receptor")
     List<Calificacion> calificacionesRecibidas;
 
-    @OneToMany(mappedBy = "remitente")
-    List<Mensaje> mensajesEnviados;
-
-    @OneToMany(mappedBy = "destinatario")
-    List<Mensaje> mensajesRecibidos;
-
     // Constructor
     public Usuario() {
     }

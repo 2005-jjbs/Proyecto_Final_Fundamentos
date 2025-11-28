@@ -28,7 +28,8 @@ public class Transaccion {
 
     Double montoTotal;
 
-    String metodoPago;
+    @ManyToOne
+    MetodoPago metodoPago;
 
     @ManyToOne
     Usuario comprador;

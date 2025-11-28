@@ -12,9 +12,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.ingesoft.redsocial.modelo.Usuario;
-import com.ingesoft.redsocial.modelo.Transaccion;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -30,11 +27,14 @@ public class Producto {
 
     Double precio;
 
-    String categoria;
+    @ManyToOne
+    Categoria categoria;
 
-    String estado;
+    @ManyToOne
+    Estado estado;
 
-    String ubicacion;
+    @ManyToOne
+    Ubicacion ubicacion;
 
     LocalDateTime fechaPublicacion;
 

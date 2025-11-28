@@ -1,39 +1,26 @@
 package com.ingesoft.redsocial.modelo;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Calificacion {
+public class MetodoPago implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Integer puntuacion;
+    String nombre;
 
-    String comentario;
+    Long numeroCuenta;
 
-    LocalDateTime fechaCalificacion;
-
-    @ManyToOne
-    Usuario emisor;
-
-    @ManyToOne
-    Usuario receptor;
-
-    @OneToOne
-    Transaccion transaccion;
 
 }
 
