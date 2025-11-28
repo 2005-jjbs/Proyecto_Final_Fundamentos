@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 import com.ingesoft.redsocial.modelo.MetodoPago;
 import com.ingesoft.redsocial.modelo.Producto;
@@ -26,8 +26,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-@Component
 @Route("comprar")
+@UIScope
 public class TransaccionView extends VerticalLayout {
 
     @Autowired
