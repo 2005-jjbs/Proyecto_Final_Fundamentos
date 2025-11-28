@@ -59,7 +59,8 @@ public class RegistroPersonaView extends Main {
         confirmarPassword = new PasswordField("Confirmar contraseña");
 
         btnRegistrar = new Button("Registrar", e -> registrar());
-        btnCancelar = new Button("Cancelar", e -> UI.getCurrent().navigate("login"));
+        // Navegar a la vista de login usando la clase LoginView (ruta raíz)
+        btnCancelar = new Button("Cancelar", e -> UI.getCurrent().navigate(LoginView.class));
 
         layout.add(correo, nombre, tipoVinculacion, password, confirmarPassword, btnRegistrar, btnCancelar);
 

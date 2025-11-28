@@ -91,6 +91,24 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         catElectronicos.setActivo(true);
         categoriaRepository.save(catElectronicos);
 
+        Categoria catRopa = new Categoria();
+        catRopa.setNombre("Ropa");
+        catRopa.setDescripcion("Prendas y vestimenta");
+        catRopa.setActivo(true);
+        categoriaRepository.save(catRopa);
+
+        Categoria catAccesorios = new Categoria();
+        catAccesorios.setNombre("Accesorios");
+        catAccesorios.setDescripcion("Accesorios personales y tecnológicos");
+        catAccesorios.setActivo(true);
+        categoriaRepository.save(catAccesorios);
+
+        Categoria catLibros = new Categoria();
+        catLibros.setNombre("Libros");
+        catLibros.setDescripcion("Libros y guías de estudio");
+        catLibros.setActivo(true);
+        categoriaRepository.save(catLibros);
+
         Estado estadoUsado = new Estado();
         estadoUsado.setNombre("Usado");
         estadoRepository.save(estadoUsado);
@@ -102,6 +120,10 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         Ubicacion ubBogota = new Ubicacion();
         ubBogota.setUniversidad("Bogotá - Pontificia Universidad Javeriana");
         ubicacionRepository.save(ubBogota);
+
+        Ubicacion ubCali = new Ubicacion();
+        ubCali.setUniversidad("Pontificia Universidad Javeriana - Cali");
+        ubicacionRepository.save(ubCali);
 
         MetodoPago mpTarjeta = new MetodoPago();
         mpTarjeta.setNombre("Tarjeta de crédito");
@@ -143,7 +165,7 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         p3.setTitulo("Camisa universitaria");
         p3.setDescripcion("Camisa oficial en buen estado, talla M.");
         p3.setPrecio(30000.0);
-        p3.setCategoria(catPapeleria); // reutilizamos categoría disponible
+        p3.setCategoria(catRopa);
         p3.setEstado(estadoUsado);
         p3.setUbicacion(ubBogota);
         p3.setFechaPublicacion(java.time.LocalDateTime.now());
@@ -152,10 +174,10 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         productoRepository.save(p3);
 
         Producto p4 = new Producto();
-        p4.setTitulo("AirpodsPro 2");
+        p4.setTitulo("Audífonos in-ear");
         p4.setDescripcion("Audífonos con micrófono, poco uso.");
         p4.setPrecio(45000.0);
-        p4.setCategoria(catElectronicos);
+        p4.setCategoria(catAccesorios);
         p4.setEstado(estadoUsado);
         p4.setUbicacion(ubBogota);
         p4.setFechaPublicacion(java.time.LocalDateTime.now());
@@ -164,10 +186,10 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         productoRepository.save(p4);
 
         Producto p5 = new Producto();
-        p5.setTitulo("Hoodie Javeriano");
-        p5.setDescripcion("Hoodie Javeriano.");
+        p5.setTitulo("Guía de Matemáticas");
+        p5.setDescripcion("Guía de ejercicios con soluciones.");
         p5.setPrecio(15000.0);
-        p5.setCategoria(catPapeleria);
+        p5.setCategoria(catLibros);
         p5.setEstado(estadoUsado);
         p5.setUbicacion(ubBogota);
         p5.setFechaPublicacion(java.time.LocalDateTime.now());
@@ -176,10 +198,10 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         productoRepository.save(p5);
 
         Producto p6 = new Producto();
-        p6.setTitulo("Maleta resistente");
-        p6.setDescripcion("Maleta para laptop, color negro, poco uso.");
+        p6.setTitulo("Mochila resistente");
+        p6.setDescripcion("Mochila para laptop, color negro, poco uso.");
         p6.setPrecio(90000.0);
-        p6.setCategoria(catElectronicos);
+        p6.setCategoria(catAccesorios);
         p6.setEstado(estadoNuevo);
         p6.setUbicacion(ubBogota);
         p6.setFechaPublicacion(java.time.LocalDateTime.now());
@@ -188,5 +210,5 @@ public class InicializadorDatosEjemplo implements CommandLineRunner {
         productoRepository.save(p6);
 
     }
-
-}
+ 
+ }

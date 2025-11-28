@@ -30,6 +30,9 @@ public class UsuarioService {
             throw new Exception("Debe usar su correo institucional @javeriana.edu.co");
         }
 
+        if (password == null || password.length() <= 5) {
+            throw new Exception("La contraseña debe tener más de 5 caracteres");
+        }
         // 2. Sistema verifica que no exista otro usuario con ese correo
         if (usuarios.existsByCorreo(correo)) {
             throw new Exception("Ya existe otra cuenta con ese correo institucional");
@@ -42,6 +45,9 @@ public class UsuarioService {
         usuario.setTipoVinculacion(tipoVinculacion);
         usuario.setPassword(password);
         usuario.setFechaRegistro(java.time.LocalDateTime.now());
+        if(correo.endsWith("@javeriana.edu.co")) {
+            usuario.setVerificado(true);
+        }
         usuario.setVerificado(false);
 
         // Asignar un login único: usamos el correo completo como login para
