@@ -2,30 +2,28 @@ package com.ingesoft.redsocial.servicios;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ingesoft.redsocial.modelo.Producto;
-import com.ingesoft.redsocial.modelo.Usuario;
 import com.ingesoft.redsocial.modelo.Categoria;
 import com.ingesoft.redsocial.modelo.Estado;
+import com.ingesoft.redsocial.modelo.Producto;
 import com.ingesoft.redsocial.modelo.Ubicacion;
-import com.ingesoft.redsocial.repositorios.ProductoRepository;
-import com.ingesoft.redsocial.repositorios.UsuarioRepository;
+import com.ingesoft.redsocial.modelo.Usuario;
 import com.ingesoft.redsocial.repositorios.CategoriaRepository;
 import com.ingesoft.redsocial.repositorios.EstadoRepository;
+import com.ingesoft.redsocial.repositorios.ProductoRepository;
 import com.ingesoft.redsocial.repositorios.UbicacionRepository;
+import com.ingesoft.redsocial.repositorios.UsuarioRepository;
 
 @SpringBootTest
 @Transactional
-class Cu04VisualizarCatalogoTest {
+public class Cu05SeleccionCrearCategoriaTest {
 
     @Autowired
-    ProductoService productoService;
+    CategoriaRepository categoriaRepository;
 
     @Autowired
     ProductoRepository productoRepository;
@@ -34,30 +32,27 @@ class Cu04VisualizarCatalogoTest {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    CategoriaRepository categoriaRepository;
-
-    @Autowired
     EstadoRepository estadoRepository;
 
     @Autowired
     UbicacionRepository ubicacionRepository;
 
     @Test
-    void listarProductos_exito() throws Exception {
+    void crearCategoriaYUsarlaEnProducto_exito() throws Exception {
+        categoriaRepository.deleteAll();
         productoRepository.deleteAll();
         usuarioRepository.deleteAll();
-        categoriaRepository.deleteAll();
         estadoRepository.deleteAll();
         ubicacionRepository.deleteAll();
 
         Usuario u = new Usuario();
-        u.setLogin("vendedor2");
-        u.setNombre("Vendedor 2");
-        u.setPassword("Vendedor2");
+        u.setLogin("vendedor_cat");
+        u.setNombre("Vendedor Cat");
+        u.setPassword("Pwd12345");
         usuarioRepository.save(u);
 
         Categoria cat = new Categoria();
-        cat.setNombre("Electrónica");
+        cat.setNombre("Artículos de prueba");
         categoriaRepository.save(cat);
 
         Estado est = new Estado();
@@ -65,26 +60,25 @@ class Cu04VisualizarCatalogoTest {
         estadoRepository.save(est);
 
         Ubicacion ub = new Ubicacion();
-        ub.setUniversidad("Cali");
+        ub.setUniversidad("Sede Prueba");
         ubicacionRepository.save(ub);
 
         Producto p = new Producto();
-        p.setTitulo("Auriculares Bluetooth");
-        p.setDescripcion("Auriculares en buen estado");
-        p.setPrecio(120000.0);
+        p.setTitulo("Objeto de prueba");
+        p.setDescripcion("Descripción");
+        p.setPrecio(1000.0);
         p.setCategoria(cat);
         p.setEstado(est);
         p.setUbicacion(ub);
         p.setActivo(true);
         p.setPropietario(u);
 
-        productoService.crear(p);
+        Producto creado = productoRepository.save(p);
 
-        List<Producto> todos = productoService.listarTodos();
-        assertFalse(todos.isEmpty());
-
-        boolean encontrado = todos.stream().anyMatch(x -> "Auriculares Bluetooth".equals(x.getTitulo()));
-        assertTrue(encontrado, "El producto creado debe aparecer en el catálogo");
+        assertNotNull(creado.getId());
+        assertNotNull(creado.getCategoria());
+        assertEquals("Artículos de prueba", creado.getCategoria().getNombre());
     }
 
 }
+

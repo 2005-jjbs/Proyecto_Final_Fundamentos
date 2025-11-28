@@ -6,27 +6,28 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ingesoft.redsocial.repositorios.CalificacionRepository;
+import com.ingesoft.redsocial.modelo.Categoria;
+import com.ingesoft.redsocial.repositorios.CategoriaRepository;
 
 @Service
-public class CalificacionService {
+public class CategoriaService {
 
     @Autowired
-    CalificacionRepository repositorio;
+    CategoriaRepository repositorio;
 
-    public Calificacion crear(Calificacion c) {
+    public Categoria crear(Categoria c) {
         return repositorio.save(c);
     }
 
-    public Optional<Calificacion> obtenerPorId(Long id) {
+    public Optional<Categoria> obtenerPorId(Long id) {
         return repositorio.findById(id);
     }
 
-    public List<Calificacion> listarTodos() {
+    public List<Categoria> listarTodos() {
         return repositorio.findAll();
     }
 
-    public Calificacion actualizar(Calificacion c) {
+    public Categoria actualizar(Categoria c) {
         return repositorio.save(c);
     }
 

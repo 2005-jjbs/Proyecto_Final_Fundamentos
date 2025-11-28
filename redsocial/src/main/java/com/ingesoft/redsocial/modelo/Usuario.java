@@ -31,12 +31,6 @@ public class Usuario {
     @OneToMany(mappedBy = "comprador")
     List<Transaccion> transaccionesCompra;
 
-    @OneToMany(mappedBy = "emisor")
-    List<Calificacion> calificacionesEmitidas;
-
-    @OneToMany(mappedBy = "receptor")
-    List<Calificacion> calificacionesRecibidas;
-
     // Constructor
     public Usuario() {
     }

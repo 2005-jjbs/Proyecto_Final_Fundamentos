@@ -9,8 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ingesoft.redsocial.repositorios.ProductoRepository;
 import com.ingesoft.redsocial.repositorios.UsuarioRepository;
+import com.ingesoft.redsocial.repositorios.CategoriaRepository;
+import com.ingesoft.redsocial.repositorios.EstadoRepository;
+import com.ingesoft.redsocial.repositorios.UbicacionRepository;
 import com.ingesoft.redsocial.modelo.Producto;
 import com.ingesoft.redsocial.modelo.Usuario;
+import com.ingesoft.redsocial.modelo.Categoria;
+import com.ingesoft.redsocial.modelo.Estado;
+import com.ingesoft.redsocial.modelo.Ubicacion;
 
 @SpringBootTest
 @Transactional
@@ -25,10 +31,22 @@ public class Cu03RegistrarProductoTest {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
+    @Autowired
+    EstadoRepository estadoRepository;
+
+    @Autowired
+    UbicacionRepository ubicacionRepository;
+
     @Test
     void crearProductoConPropietario_exito() throws Exception {
         productoRepository.deleteAll();
         usuarioRepository.deleteAll();
+        categoriaRepository.deleteAll();
+        estadoRepository.deleteAll();
+        ubicacionRepository.deleteAll();
 
         Usuario u = new Usuario();
         u.setLogin("vendedor");
@@ -36,13 +54,25 @@ public class Cu03RegistrarProductoTest {
         u.setPassword("Vendedor1");
         usuarioRepository.save(u);
 
+        Categoria cat = new Categoria();
+        cat.setNombre("Libros");
+        categoriaRepository.save(cat);
+
+        Estado est = new Estado();
+        est.setNombre("Usado");
+        estadoRepository.save(est);
+
+        Ubicacion ub = new Ubicacion();
+        ub.setUniversidad("Bogotá");
+        ubicacionRepository.save(ub);
+
         Producto p = new Producto();
         p.setTitulo("Libro de Java");
         p.setDescripcion("Libro usado en buen estado");
         p.setPrecio(30000.0);
-        p.setCategoria("Libros");
-        p.setEstado("Usado");
-        p.setUbicacion("Bogotá");
+        p.setCategoria(cat);
+        p.setEstado(est);
+        p.setUbicacion(ub);
         p.setActivo(true);
         p.setPropietario(u);
 
@@ -55,7 +85,7 @@ public class Cu03RegistrarProductoTest {
     }
 
     @Test
-    void crearProducto_sinTitulo_falla() {
+    void crearProducto_sinTitulo_falla() throws Exception {
         productoRepository.deleteAll();
         usuarioRepository.deleteAll();
 
@@ -78,4 +108,3 @@ public class Cu03RegistrarProductoTest {
     }
 
 }
-

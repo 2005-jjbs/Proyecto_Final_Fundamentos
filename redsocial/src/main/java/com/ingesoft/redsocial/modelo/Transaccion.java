@@ -10,9 +10,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.ingesoft.redsocial.modelo.Usuario;
-import com.ingesoft.redsocial.modelo.Producto;
-
 @Entity
 @Data
 @NoArgsConstructor
