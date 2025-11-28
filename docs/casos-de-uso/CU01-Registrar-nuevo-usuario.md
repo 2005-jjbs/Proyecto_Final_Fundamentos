@@ -5,13 +5,14 @@
 ## Guión (Curso normal de eventos)
 
 1. Actor ingresa su correo institucional (@javeriana.edu.co)
-2. Sistema verifica que no exista otro usuario con ese correo
-3. Actor ingresa su nombre completo
-4. Actor ingresa su tipo de vinculación (Estudiante/Profesor/Egresado)
-5. Actor ingresa su password
-6. Sistema valida que el password tenga más de 8 caracteres con al menos un número y una mayúscula
-7. Sistema crea el nuevo usuario con perfil universitario
-8. Sistema envía correo de confirmación a la dirección institucional
+2. El sistema válida que el correo tenga el dominio institucional
+3. Sistema verifica que no exista otro usuario con ese correo
+4. Actor ingresa su nombre completo
+5. Actor ingresa su tipo de vinculación (Estudiante/Profesor/Egresado)
+6. Actor ingresa su password
+7. Sistema válida que el password tenga más de 8 caracteres con al menos un número y una mayúscula
+8. Sistema crea el nuevo usuario con perfil universitario
+9. Sistema envía correo de confirmación a la dirección institucional
 
 ## Excepciones (Caminos alternos)
 

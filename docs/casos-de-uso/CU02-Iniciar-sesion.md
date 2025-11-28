@@ -15,11 +15,13 @@ Actor: Usuario registrado
 **Excepción:** No existe un usuario con ese login
 
 2.1. Sistema muestra un mensaje "No existe un usuario con ese login"
+
 2.2. Termina
 
 **Excepción:** La contraseña no coincide
 
 4.1. Sistema muestra un mensaje "La contraseña no coincide"
+
 4.2. Termina
 
 <br>
